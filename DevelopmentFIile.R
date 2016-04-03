@@ -24,3 +24,21 @@ plot(exampTrap)
 
 help(integrateIt)
 help(Trapezoid)
+help(Simpson)
+
+# testing the validity checks
+tryx<-seq(-5, 4.99, by=.9)
+length(tryx)
+
+
+exampSimp<-integrateIt(tryx, tryy, -5, 5, rule="Simp")
+exampTrap<-integrateIt(tryx, tryy, -5, 5, rule="Trap")
+
+tryy[1]<-NA
+exampTrap<-integrateIt(tryx, tryy, -5, 5, rule="Trap")
+
+tryy<-dnorm(tryx)
+tryy<-tryy[-1]
+exampTrap<-integrateIt(tryx, tryy, -5, 5, rule="Trap")
+
+
