@@ -1,7 +1,11 @@
 setwd("~/GitHub/2016Midterm")
 #package.skeleton("integrateIt")
 
-
+library(devtools)
+library(roxygen2)
+current.code <- as.package("integrateIt")
+load_all(current.code)
+document(current.code)
 
 
 

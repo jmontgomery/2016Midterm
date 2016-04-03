@@ -1,3 +1,20 @@
+#' A Simpson object
+#' 
+#' Object of class \code{Simpson} are created by the \code{integrateIt} function
+#'
+#' 
+#' An object of the class `Simpson' has the following slots:
+#' \itemize{
+#' \item \code{x} The potential values at which the function should be evaluated
+#' \item \code{y} The value of the function evaluated at the corresponding values of x
+#' \item \code{answer} The estimated integral using Simpsons method
+
+#' }
+#'
+#' @author Jacob M. Montgomery: \email{jacob.montgomery@@wustl.edu}
+#' @aliases Trapezoid-class initialize,Trapezoid-method plot,Trapezoid-method print,Trapezoid-method
+#' @rdname Trapezoid
+#' @export
 setClass(Class="Simpson",
          representation=representation(
            x="numeric",
