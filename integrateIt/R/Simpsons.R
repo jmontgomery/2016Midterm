@@ -12,8 +12,8 @@
 #' }
 #'
 #' @author Jacob M. Montgomery: \email{jacob.montgomery@@wustl.edu}
-#' @aliases Trapezoid-class initialize,Trapezoid-method plot,Trapezoid-method print,Trapezoid-method
-#' @rdname Trapezoid
+#' @aliases Simpson-class initialize,Simpson-method plot,Simpson-method print,Simpson-method
+#' @rdname Simpson
 #' @export
 setClass(Class="Simpson",
          representation=representation(
@@ -27,9 +27,18 @@ setClass(Class="Simpson",
            answer=c()
          ))
 
+setValidity("Simpson", function(object){
+  sameLength<-length(object@x) == length(object@y)#X and Y should be of the same length
+  oddLength<-length(object@x)%%2 == 1
+  allData<-all(!is.na(object@x)) & all(!is.na(object@y))
+  if(!sameLength | !oddLength | !allData){return("Not appropriately set up")}
+} )
+
+
 setMethod("initialize", "Simpson", 
           function(.Object, ...){
             value=callNextMethod()
+            validObject(value)
             return(value)
           }
 )

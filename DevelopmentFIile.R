@@ -1,6 +1,8 @@
 setwd("~/GitHub/2016Midterm")
 #package.skeleton("integrateIt")
 
+rm(list=ls())
+
 library(devtools)
 library(roxygen2)
 current.code <- as.package("integrateIt")
@@ -8,7 +10,7 @@ load_all(current.code)
 document(current.code)
 
 
-
+# an example
 tryx<-seq(-5, 4.99, by=.95)
 length(tryx)
 tryy<-dnorm(tryx)
@@ -20,4 +22,5 @@ plot(exampSimp)
 print(exampTrap)
 plot(exampTrap)
 
-
+help(integrateIt)
+help(Trapezoid)

@@ -27,6 +27,25 @@ setClass(Class="Trapezoid",
            answer=c()
          ))
 
+
+setValidity("Trapezoid", function(object){
+  sameLength<-length(object@x) == length(object@y)#X and Y should be of the same length
+  allData<-all(!is.na(object@x)) & all(!is.na(object@y))
+  if(!sameLength | !allData){return("Not appropriately set up")}
+} )
+
+
+#' @export
+setMethod("initialize", "Trapezoid", 
+          function(.Object, ...){
+            value=callNextMethod()
+            validObject(value)
+            return(value)
+          }
+)
+
+
+
 #' @export
 setMethod("initialize", "Trapezoid", 
           function(.Object, ...){
