@@ -1,5 +1,45 @@
 
 
+## Set up the class definitions
+setClass(Class="Trapezoid",
+         representation=representation(
+          x="numeric",
+          y="numeric",
+          answer="numeric"
+         ),
+         prototype = prototype(
+           x = c(),
+           y = c(),
+           answer=c()
+         ))
+
+setMethod("initialize", "Trapezoid", 
+          function(.Object, ...){
+            value=callNextMethod()
+            return(value)
+          }
+) 
+
+## Set up the class definitions
+setClass(Class="Simpson",
+         representation=representation(
+           x="numeric",
+           y="numeric",
+           answer="numeric"
+         ),
+         prototype = prototype(
+           x = c(),
+           y = c(),
+           answer=c()
+         ))
+
+setMethod("initialize", "Simpson", 
+          function(.Object, ...){
+            value=callNextMethod()
+            return(value)
+          }
+) 
+
 
 integrateIt<-function(x, y, a, b, rule="Trap"){
   ## Do the trapezoidal
@@ -7,18 +47,47 @@ integrateIt<-function(x, y, a, b, rule="Trap"){
   if(rule=="Trap"){
     h<-(b-a)/(2*n) # calculate h. Put 2 in the denominator
     answer<-h*(2*sum(y[2:(n-1)])+y[1]+y[n]) # calculate the outcome
+    out<-new("Trapezoid", x=x, y=y, answer=answer)
     }
-  if(rule=="Simp"){
+  else {
     h<-(b-a)/(n*3) ## calculate h.  Put 3 in the denominator
     first<-y[1] ## first element
     last<-y[n] ## second element
     evens.sum<-sum(y[seq(2, n-1, by=2)]) ## every other elements excludign first and last
     odds.sum<-sum(y[seq(3, n-2, by=2)]) # the rest
     answer<-h*(first+4*evens.sum + 2*odds.sum + last) #calculate output
+    out<-new("Simpson", x=x, y=y, answer=answer)
   }
-  out<-list(x=x, y=y, answer=answer)
-  return(out)  
 }
+
+setMethod("print", "Trapezoid",
+          function(x){
+            cat("Integration using trapezoidal method \n")
+            cat(x@answer)
+          }
+          )
+
+setMethod("print", "Simpson",
+          function(x){
+            cat("Integration using Simpson's method \n")
+            cat(x@answer)
+          }
+)
+
+
+
+## everything we need to plot the trapezoids
+setMethod("plot", "Trapezoid", 
+          function(x, y=NULL){
+            obj<-x
+            plot(obj@x, obj@y, type="l")
+            segments(obj@x, obj@y, obj@x, 0)
+          }
+)
+
+
+
+
 
 tryx<-seq(-5, 4.99, by=.95)
 length(tryx)
@@ -26,11 +95,11 @@ tryy<-dnorm(tryx)
 
 exampSimp<-integrateIt(tryx, tryy, -5, 5, rule="Simp")
 exampTrap<-integrateIt(tryx, tryy, -5, 5, rule="Trap")
+print(exampSimp)
+print(exampTrap)
+plot(exampTrap)
 
-## everything we need to plot the trapezoids
-obj<-exampTrap
-plot(obj$x, obj$y, type="l")
-segments(obj$x, obj$y, obj$x, 0)
+new("Trapezoid")
 
 
 ## code below is for plotting the parabolas
